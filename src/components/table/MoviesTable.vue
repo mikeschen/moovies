@@ -24,7 +24,7 @@ import MoviesPagination from './MoviesPagination.vue';
 const movieStore = useMovieStore();
 
 onMounted(async () => {
-	await movieStore.getData();
+	await movieStore.getMovies();
 });
 
 const { loading, movies } = storeToRefs(movieStore);

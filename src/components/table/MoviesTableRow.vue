@@ -1,6 +1,6 @@
 <template>
 	<td class="border border-emerald-500 px-4 py-2 text-emerald-600 font-medium">
-		<img class="object-fill h-48" :src="movie.posterUrl" />
+		<img class="object-fill h-24" :src="movie.posterUrl" />
 	</td>
 	<td class="border border-emerald-500 px-4 py-2 text-emerald-600 font-medium">
 		{{ movie.title }}
