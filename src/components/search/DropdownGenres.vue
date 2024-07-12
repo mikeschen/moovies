@@ -26,24 +26,24 @@
 		<div
 			v-if="isOpen"
 			class="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+			role="menu"
+			aria-orientation="vertical"
+			aria-labelledby="options-menu"
 		>
-			<div
-				class="py-1"
-				role="menu"
-				aria-orientation="vertical"
-				aria-labelledby="options-menu"
-			>
-				<a
-					v-for="genre in allGenres"
-					:key="genre.id"
-					href="#"
-					@click.prevent="selectGenre(genre)"
-					class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-					role="menuitem"
-				>
-					{{ genre.title }}
-				</a>
-			</div>
+			<ul class="py-1">
+				<li>
+					<a
+						v-for="genre in allGenres"
+						:key="genre.id"
+						href="#"
+						@click.prevent="selectGenre(genre)"
+						class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+						role="menuitem"
+					>
+						{{ genre.title }}
+					</a>
+				</li>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -61,11 +61,11 @@ onMounted(async () => {
 	await movieStore.getGenres();
 });
 
-const genreName = ref('All');
+const genreName = ref('All Genres');
 
 const selectGenre = (genre: Genre) => {
-	if (genre.title === 'All') {
-		genreName.value = 'All';
+	if (genre.title === 'All Genres') {
+		genreName.value = 'All Genres';
 		isOpen.value = false;
 		movieStore.setGenre('');
 		movieStore.getMovies();
@@ -78,7 +78,7 @@ const selectGenre = (genre: Genre) => {
 };
 
 const allGenres = computed(() => {
-	return [{ id: "0", title: 'All' }, ...genres.value];
+	return [{ id: '0', title: 'All Genres' }, ...genres.value];
 });
 
 // Dropdown
