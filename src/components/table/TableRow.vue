@@ -8,10 +8,14 @@
 	<td class="border border-emerald-500 px-4 py-2 text-emerald-600 font-medium">
 		{{ movie.rating }}
 	</td>
+	<td class="border border-emerald-500 px-4 py-2 text-emerald-600 font-medium">
+		<RouterLink :to="{ name: 'detail', params: { id: movie.id } }"> Details </RouterLink>
+	</td>
 </template>
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
+import { RouterLink } from 'vue-router';
 
 defineProps({
 	movie: {

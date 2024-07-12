@@ -48,9 +48,10 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { storeToRefs } from 'pinia';
+import type { Genre } from '../types/movies';
 import { useMovieStore } from '../../stores/movieStore';
 
 const movieStore = useMovieStore();
@@ -62,7 +63,13 @@ onMounted(async () => {
 
 const genreName = ref('All');
 
-const selectGenre = (genre) => {
+const selectGenre = (genre: Genre) => {
+	if (genre.title === 'All') {
+		genreName.value = 'All';
+		isOpen.value = false;
+		movieStore.getMovies();
+		return;
+	}
 	genreName.value = genre.title;
 	isOpen.value = false;
 	movieStore.getMovies('', genre.title);

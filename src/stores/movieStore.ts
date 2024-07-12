@@ -1,26 +1,30 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import type { Movie, MovieDetail, Genre } from '../types/movies';
 
 const baseUrl = 'https://0kadddxyh3.execute-api.us-east-1.amazonaws.com';
 
 export const useMovieStore = defineStore('movie', {
 	state: () => ({
-		genres: [] as any[],
+		genres: [] as Genre[],
 		loading: false as Boolean,
 		search: '' as string,
-		movies: [] as any[],
-		totalPages: 0 as number
+		movies: [] as Movie[],
+		totalPages: 0 as number,
+		movieDetail: null as MovieDetail | null
 	}),
 	actions: {
-		// todo maybe check for token
+		setSearch(search: string) {
+			this.search = search;
+		},
 		async getMovies(page = '', genre = '') {
 			this.loading = true;
 			try {
-				console.log('genre 👹', genre);
 				const params = new URLSearchParams({
 					search: this.search,
 					page,
-					genre
+					genre,
+					limit: '10'
 				});
 				const url = `${baseUrl}/movies?${params.toString()}`;
 				const response = await axios.get(url);
@@ -38,14 +42,21 @@ export const useMovieStore = defineStore('movie', {
 				const url = `${baseUrl}/genres/movies?${params.toString()}`;
 				const response = await axios.get(url);
 				this.genres = response.data.data;
-				console.log('genres!!', this.genres);
 			} catch (error) {
 				console.error('Failed to get genres', error);
 			}
 		},
-		// todo state interface
-		setSearch(search: string) {
-			this.search = search;
+		async getMovieDetail(id: string) {
+			this.loading = true;
+			try {
+				const url = `${baseUrl}/movies/${id}`;
+				const response = await axios.get(url);
+				this.movieDetail = response.data;
+			} catch (error) {
+				console.error('Failed to get movie details', error);
+			} finally {
+				this.loading = false;
+			}
 		}
 	}
 });

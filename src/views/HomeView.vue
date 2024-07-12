@@ -1,7 +1,7 @@
 <template>
 	<main>
 		<SearchBar></SearchBar>
-		<MoviesTable v-if="token"></MoviesTable>
+		<TableLayout v-if="token"></TableLayout>
 	</main>
 </template>
 
@@ -10,7 +10,7 @@ import { onMounted } from 'vue';
 import { useAuthStore } from '../stores/authStore';
 import { storeToRefs } from 'pinia';
 import SearchBar from '../components/search/SearchBar.vue';
-import MoviesTable from '../components/table/MoviesTable.vue';
+import TableLayout from '../components/table/TableLayout.vue';
 
 const authStore = useAuthStore();
 const { token } = storeToRefs(authStore);

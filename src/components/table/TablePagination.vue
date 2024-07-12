@@ -66,9 +66,9 @@ import { storeToRefs } from 'pinia';
 import { useMovieStore } from '../../stores/movieStore';
 
 const movieStore = useMovieStore();
-const { search, totalPages, movies } = storeToRefs(movieStore);
+const { totalPages, movies } = storeToRefs(movieStore);
 
-const currentPage = ref(1);
+const currentPage = ref<number>(1);
 
 const goToPage = (page: string) => {
 	if (page === '...') return;
@@ -92,13 +92,15 @@ const nextPage = () => {
 };
 
 const visiblePages = computed(() => {
-	if (totalPages.value <= 5) {
+	// If pages are less than 6, show all pages
+	if (totalPages.value < 6) {
 		return Array.from({ length: totalPages.value }, (_, i) => i + 1);
 	}
 
 	let start = Math.max(1, currentPage.value - Math.floor(5 / 2));
 	let end = Math.min(totalPages.value, start + 5 - 1);
 
+	// Adjusts the start if the range is less than 5 pages
 	if (end - start + 1 < 5) {
 		start = Math.max(1, end - 5 + 1);
 	}

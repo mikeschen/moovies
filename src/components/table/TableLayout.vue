@@ -2,30 +2,29 @@
 	<div v-if="loading">Loading...</div>
 	<div v-else class="rounded-t-xl overflow-hidden">
 		<table class="table-auto">
-			<MoviesTableHeader />
+			<TableHeader />
 			<tbody>
 				<tr v-for="movie in movies" :key="movie.id">
-					<MoviesTableRow :movie="movie" />
+					<TableRow :movie="movie" />
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<MoviesPagination></MoviesPagination>
+	<TablePagination></TablePagination>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useMovieStore } from '../../stores/movieStore';
-import MoviesTableHeader from './MoviesTableHeader.vue';
-import MoviesTableRow from './MoviesTableRow.vue';
-import MoviesPagination from './MoviesPagination.vue';
+import TableHeader from './TableHeader.vue';
+import TableRow from './TableRow.vue';
+import TablePagination from './TablePagination.vue';
 
 const movieStore = useMovieStore();
+const { loading, movies } = storeToRefs(movieStore);
 
 onMounted(async () => {
 	await movieStore.getMovies();
 });
-
-const { loading, movies } = storeToRefs(movieStore);
 </script>
