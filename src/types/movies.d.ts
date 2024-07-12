@@ -1,5 +1,6 @@
 export interface Genre {
-	name: string;
+	id: string;
+	title: string;
 }
 
 export interface Movie {
@@ -20,5 +21,7 @@ export interface MovieDetail {
 	ratingValue: number;
 	title: string;
 	worstRating: number;
+	summary: string;
+	posterUrl: string;
+	writers: string[];
 }
-

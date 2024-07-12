@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { storeToRefs } from 'pinia';
-import type { Genre } from '../types/movies';
+import type { Genre } from '../../types/movies.d.ts';
 import { useMovieStore } from '../../stores/movieStore';
 
 const movieStore = useMovieStore();
@@ -76,7 +76,7 @@ const selectGenre = (genre: Genre) => {
 };
 
 const allGenres = computed(() => {
-	return [{ id: 0, title: 'All' }, ...genres.value];
+	return [{ id: "0", title: 'All' }, ...genres.value];
 });
 
 // Dropdown

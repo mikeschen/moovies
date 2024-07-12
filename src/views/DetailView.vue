@@ -11,13 +11,13 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMovieStore } from '../stores/movieStore';
 import DetailLayout from '../components/detail/DetailLayout.vue';
 
 interface Props {
-	id: string | number;
+	id: string;
 }
 const props = defineProps<Props>();
 

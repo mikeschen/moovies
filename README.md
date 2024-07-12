@@ -1,6 +1,14 @@
-# movies-schennum
+# Moovies
 
-This template should help get you started developing with Vue 3 in Vite.
+## Highlights
+
+I like the pagination setup this way, in my previous position our add used a dropdown to choose pages, but I think its much better UI/UX for ellipsis.
+
+Although this isn't a test for design, I really enjoyed using Tailwind for a quick design for components. In my previous role we used Bootstrap, but after awhile it looks kind of generic.
+
+## Improvements
+
+I would love to connect with the OpenAI API and add a section for generated Synopsis and a Movie Review.
 
 ## Recommended IDE Setup
 

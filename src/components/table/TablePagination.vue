@@ -70,24 +70,25 @@ const { totalPages, movies } = storeToRefs(movieStore);
 
 const currentPage = ref<number>(1);
 
-const goToPage = (page: string) => {
+const goToPage = (page: number | string) => {
 	if (page === '...') return;
 
-	currentPage.value = page;
-	useMovieStore().getMovies(page);
-}
+	const pageNumber = typeof page === 'number' ? page : parseInt(page, 10);
+	currentPage.value = pageNumber;
+	movieStore.getMovies(pageNumber.toString());
+};
 
 const prevPage = () => {
 	if (currentPage.value > 1) {
 		currentPage.value--;
-		useMovieStore().getMovies(currentPage.value);
+		movieStore.getMovies(currentPage.value.toString());
 	}
 };
 
 const nextPage = () => {
 	if (currentPage.value < totalPages.value) {
 		currentPage.value++;
-		useMovieStore().getMovies(currentPage.value);
+		movieStore.getMovies(currentPage.value.toString());
 	}
 };
 
@@ -123,7 +124,7 @@ const visiblePages = computed(() => {
 	return pages;
 });
 
-const pageButtonClass = (page: string) => [
+const pageButtonClass = (page: number | string) => [
 	'relative px-4 py-2 inline-flex items-center focus:z-20 font-semibold text-sm',
 	page === currentPage.value
 		? 'z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'

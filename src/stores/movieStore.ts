@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import type { Movie, MovieDetail, Genre } from '../types/movies';
+import type { Movie, MovieDetail, Genre } from '../types/movies.d.ts';
 
 const baseUrl = 'https://0kadddxyh3.execute-api.us-east-1.amazonaws.com';
 
