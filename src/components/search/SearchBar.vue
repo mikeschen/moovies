@@ -1,5 +1,5 @@
 <template>
-	<form class="max-w-md mx-auto" @submit.prevent="onSearch">
+	<form class="max-w-md mx-auto" @submit.prevent="handleSearch">
 		<label
 			for="default-search"
 			class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -38,18 +38,26 @@
 				Search Movies By Title
 			</button>
 		</div>
+		<DropdownGenres v-if="token"></DropdownGenres>
 	</form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
-import { defineEmits } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from '../../stores/authStore';
+import { useMovieStore } from '../../stores/movieStore';
+import DropdownGenres from './DropdownGenres.vue';
 
-const emit = defineEmits(['handle-search']);
+const movieStore = useMovieStore();
+const authStore = useAuthStore();
+
+const { token } = storeToRefs(authStore);
 
 const searchQuery = ref('');
 
-function onSearch() {
-	emit('handle-search', searchQuery.value);
-}
+const handleSearch = async () => {
+	movieStore.setSearch(searchQuery.value);
+	await movieStore.getMovies();
+};
 </script>

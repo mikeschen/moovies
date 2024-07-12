@@ -32,50 +32,23 @@
 					<a
 						href="#"
 						class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+						@click.prevent="prevPage"
 					>
 						<span class="sr-only">Previous</span>
 						<ChevronLeftIcon class="h-5 w-5" aria-hidden="true" />
 					</a>
-					<!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
-					<template v-if="totalPages > 6">
+					<template v-for="page in visiblePages" :key="page">
 						<a
 							href="#"
-							aria-current="page"
-							class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-							@click.prevent="goToPage(1)"
-							>1</a
+							:class="pageButtonClass(page)"
+							@click.prevent="goToPage(page)"
+							>{{ page }}</a
 						>
-						<a
-							href="#"
-							class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-							@click.prevent="goToPage(2)"
-							>2</a
-						>
-						<a href="#" :class="linkClass" @click.prevent="goToPage(3)">3</a>
-						<span
-							class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0"
-							>...</span
-						>
-						<a href="#" :class="linkClass" @click.prevent="goToPage(totalPages - 2)">{{
-							totalPages - 2
-						}}</a>
-						<a href="#" :class="linkClass" @click.prevent="goToPage(totalPages - 1)">{{
-							totalPages - 1
-						}}</a>
-						<a href="#" :class="linkClass" @click.prevent="goToPage(totalPages)">{{
-							totalPages
-						}}</a>
-					</template>
-					<template v-else>
-						<template v-for="(page, i) in totalPages" :key="i">
-							<a href="#" :class="linkClass" @click.prevent="goToPage(i + 1)">{{
-								i + 1
-							}}</a>
-						</template>
 					</template>
 					<a
 						href="#"
 						class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+						@click.prevent="nextPage"
 					>
 						<span class="sr-only">Next</span>
 						<ChevronRightIcon class="h-5 w-5" aria-hidden="true" />
@@ -93,23 +66,66 @@ import { storeToRefs } from 'pinia';
 import { useMovieStore } from '../../stores/movieStore';
 
 const movieStore = useMovieStore();
+const { search, totalPages, movies } = storeToRefs(movieStore);
 
 const currentPage = ref(1);
 
-function goToPage(page: number) {
-	isActive.value = !isActive.value;
+const goToPage = (page: string) => {
+	if (page === '...') return;
+
 	currentPage.value = page;
-	useMovieStore().getMovies('', page);
+	useMovieStore().getMovies(page);
 }
 
-const isActive = ref(false);
+const prevPage = () => {
+	if (currentPage.value > 1) {
+		currentPage.value--;
+		useMovieStore().getMovies(currentPage.value);
+	}
+};
 
-const linkClass = computed(() => ({
-	'relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0':
-		true,
-	'z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600':
-		isActive.value
-}));
+const nextPage = () => {
+	if (currentPage.value < totalPages.value) {
+		currentPage.value++;
+		useMovieStore().getMovies(currentPage.value);
+	}
+};
 
-const { totalPages, movies } = storeToRefs(movieStore);
+const visiblePages = computed(() => {
+	if (totalPages.value <= 5) {
+		return Array.from({ length: totalPages.value }, (_, i) => i + 1);
+	}
+
+	let start = Math.max(1, currentPage.value - Math.floor(5 / 2));
+	let end = Math.min(totalPages.value, start + 5 - 1);
+
+	if (end - start + 1 < 5) {
+		start = Math.max(1, end - 5 + 1);
+	}
+
+	const pages = [];
+	if (start > 1) {
+		pages.push(1);
+		if (start > 2) pages.push('...');
+	}
+
+	for (let i = start; i <= end; i++) {
+		pages.push(i);
+	}
+
+	if (end < totalPages.value) {
+		if (end < totalPages.value - 1) pages.push('...');
+		pages.push(totalPages.value);
+	}
+
+	return pages;
+});
+
+const pageButtonClass = (page: string) => [
+	'relative px-4 py-2 inline-flex items-center focus:z-20 font-semibold text-sm',
+	page === currentPage.value
+		? 'z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+		: 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0',
+	{ 'cursor-default': page === '...' }
+];
 </script>

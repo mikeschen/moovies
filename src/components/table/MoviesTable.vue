@@ -1,6 +1,6 @@
 <template>
 	<div v-if="loading">Loading...</div>
-	<div v-else class="rounded-t-xl overflow-hidden p-10">
+	<div v-else class="rounded-t-xl overflow-hidden">
 		<table class="table-auto">
 			<MoviesTableHeader />
 			<tbody>
