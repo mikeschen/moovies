@@ -8,6 +8,7 @@ export const useMovieStore = defineStore('movie', {
 	state: () => ({
 		genres: [] as Genre[],
 		loading: false as Boolean,
+		genre: '' as string,
 		search: '' as string,
 		movies: [] as Movie[],
 		totalPages: 0 as number,
@@ -17,13 +18,16 @@ export const useMovieStore = defineStore('movie', {
 		setSearch(search: string) {
 			this.search = search;
 		},
-		async getMovies(page = '', genre = '') {
+		setGenre(genre: string) {
+			this.genre = genre;
+		},
+		async getMovies(page = '') {
 			this.loading = true;
 			try {
 				const params = new URLSearchParams({
 					search: this.search,
 					page,
-					genre,
+					genre: this.genre,
 					limit: '10'
 				});
 				const url = `${baseUrl}/movies?${params.toString()}`;

@@ -67,12 +67,14 @@ const selectGenre = (genre: Genre) => {
 	if (genre.title === 'All') {
 		genreName.value = 'All';
 		isOpen.value = false;
+		movieStore.setGenre('');
 		movieStore.getMovies();
 		return;
 	}
 	genreName.value = genre.title;
 	isOpen.value = false;
-	movieStore.getMovies('', genre.title);
+	movieStore.setGenre(genre.title);
+	movieStore.getMovies();
 };
 
 const allGenres = computed(() => {
