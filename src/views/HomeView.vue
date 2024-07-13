@@ -1,5 +1,5 @@
 <template>
-	<main>
+	<main class="w-[90vw] h-[90vh] mx-auto my-auto">
 		<SearchBar></SearchBar>
 		<TableLayout v-if="token"></TableLayout>
 	</main>
