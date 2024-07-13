@@ -12,6 +12,7 @@ Although this isn't a test for design, I really enjoyed using Tailwind for a qui
 
 I would love to connect with the OpenAI API and add a section for generated Synopsis and a Movie Review.
 I also would have spent more time improving accessibility (such as focus management and keyboard nav) and improve the look and feel of the site.
+Some unit tests would be nice too.
 
 ## Recommended IDE Setup
 
