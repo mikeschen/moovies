@@ -1,5 +1,5 @@
 <template>
-	<section class="mx-auto">
+	<section class="max-w-md">
 		<form @submit.prevent="handleSearch" role="search">
 			<label
 				for="default-search"

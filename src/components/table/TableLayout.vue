@@ -1,6 +1,6 @@
 <template>
 	<div v-if="loading">Loading...</div>
-	<section v-else class="rounded-t-xl overflow-hidden">
+	<section v-else class="rounded-t-xl overflow-hidden max-w-full">
 		<table class="table-auto">
 			<TableHeader />
 			<tbody>
