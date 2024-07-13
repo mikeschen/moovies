@@ -1,6 +1,6 @@
 <template>
 	<div v-if="loading">Loading...</div>
-	<div v-else class="rounded-t-xl overflow-hidden">
+	<section v-else class="rounded-t-xl overflow-hidden">
 		<table class="table-auto">
 			<TableHeader />
 			<tbody>
@@ -9,8 +9,10 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
-	<TablePagination></TablePagination>
+	</section>
+	<tfoot>
+		<TablePagination></TablePagination>
+	</tfoot>
 </template>
 
 <script setup lang="ts">

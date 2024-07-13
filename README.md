@@ -1,15 +1,17 @@
-# Moovies
+# Moovies 🐮
 
-## Highlights
+## Highlights 💡
 
-I like the pagination setup this way, in my previous position our add used a dropdown to choose pages, but I think its much better UI/UX for ellipsis.
+I like the pagination setup this way, in my previous position we used a dropdown to choose pages in our app. In this app I went with ellipsis, which I feel is better UI/UX.
 
-Although this isn't a test for design, I really enjoyed using Tailwind for a quick design for components. In my previous role we used Bootstrap, but after awhile it looks kind of generic.
+## Most Proud Of 👏
 
-## Improvements
+Although this isn't a test for design, I really enjoyed using Tailwind for a quick design of components. In my previous role we used Bootstrap for our app, but after awhile it looks a little generic.
+
+## Improvements 🛠️
 
 I would love to connect with the OpenAI API and add a section for generated Synopsis and a Movie Review.
-I also would have spent more time improving accessibility.
+I also would have spent more time improving accessibility (such as focus management and keyboard nav) and improve the look and feel of the site.
 
 ## Recommended IDE Setup
 

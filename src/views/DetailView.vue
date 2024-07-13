@@ -1,13 +1,14 @@
 <template>
-	<div class="bg-white shadow-md rounded-lg p-6 max-w-2xl mx-auto">
+	<section class="bg-white shadow-md rounded-lg p-6 max-w-2xl mx-auto">
 		<DetailLayout />
 		<button
 			@click="goBack"
 			class="mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
+			aria-label="Go Back"
 		>
 			Go Back
 		</button>
-	</div>
+	</section>
 </template>
 
 <script setup lang="ts">
