@@ -45,7 +45,7 @@
 							href="#"
 							:class="pageButtonClass(page)"
 							@click.prevent="goToPage(page)"
-							:aria-current="page === currentPage.value ? 'page' : undefined"
+							:aria-current="page === currentPage ? 'page' : undefined"
 							>{{ page }}</a
 						>
 					</template>
