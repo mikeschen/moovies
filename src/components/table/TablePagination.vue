@@ -97,17 +97,19 @@ const nextPage = () => {
 };
 
 const visiblePages = computed(() => {
-	// If pages are less than 6, show all pages
-	if (totalPages.value < 6) {
+	const showVisiblePages = 5;
+
+	// If pages are less or equal to 5, show all pages
+	if (totalPages.value <= showVisiblePages) {
 		return Array.from({ length: totalPages.value }, (_, i) => i + 1);
 	}
 
-	let start = Math.max(1, currentPage.value - Math.floor(5 / 2));
-	let end = Math.min(totalPages.value, start + 5 - 1);
+	let start = Math.max(1, currentPage.value - Math.floor(showVisiblePages / 2));
+	let end = Math.min(totalPages.value, start + showVisiblePages - 1);
 
 	// Adjusts the start if the range is less than 5 pages
-	if (end - start + 1 < 5) {
-		start = Math.max(1, end - 5 + 1);
+	if (end - start + 1 < showVisiblePages) {
+		start = Math.max(1, end - showVisiblePages + 1);
 	}
 
 	const pages = [];

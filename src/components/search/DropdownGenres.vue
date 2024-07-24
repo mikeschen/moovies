@@ -35,7 +35,7 @@
 			<ul class="py-1">
 				<li>
 					<a
-						v-for="genre in allGenres"
+						v-for="genre in showAllGenres"
 						:key="genre.id"
 						href="#"
 						@click.prevent="selectGenre(genre)"
@@ -63,11 +63,13 @@ onMounted(async () => {
 	await movieStore.getGenres();
 });
 
-const genreName = ref('All Genres');
+const allGenres = 'All Genres';
+
+const genreName = ref(allGenres);
 
 const selectGenre = (genre: Genre) => {
-	if (genre.title === 'All Genres') {
-		genreName.value = 'All Genres';
+	if (genre.title === allGenres) {
+		genreName.value = allGenres;
 		isOpen.value = false;
 		movieStore.setGenre('');
 		movieStore.getMovies();
@@ -79,8 +81,8 @@ const selectGenre = (genre: Genre) => {
 	movieStore.getMovies();
 };
 
-const allGenres = computed(() => {
-	return [{ id: '0', title: 'All Genres' }, ...genres.value];
+const showAllGenres = computed(() => {
+	return [{ id: '0', title: allGenres }, ...genres.value];
 });
 
 // Dropdown
